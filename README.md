@@ -1,2 +1,2 @@
-# My-Job-Portfolio
+# Job-Portfolio
 My First Portfolio Project Descriptions 
