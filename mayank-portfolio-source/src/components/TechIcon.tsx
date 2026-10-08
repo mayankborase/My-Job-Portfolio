@@ -1,0 +1,101 @@
+import React from "react";
+import {
+  Code,
+  Coffee,
+  Terminal,
+  FileCode2,
+  Database,
+  Atom,
+  Globe,
+  Palette,
+  Layout,
+  Server,
+  Zap,
+  Cpu,
+  HardDrive,
+  Smartphone,
+  BrainCircuit,
+  Network,
+  Bot,
+  MessageSquareCode,
+  GitBranch,
+  Github,
+  Laptop,
+  GraduationCap,
+  MapPin,
+  Code2,
+  Target,
+  ExternalLink,
+  ChevronRight,
+  Download,
+  Eye,
+  Mail,
+  Linkedin,
+  Sun,
+  Moon,
+  Menu,
+  X,
+  CheckCircle2,
+  AlertCircle,
+  Briefcase,
+  Layers,
+  Award,
+  Sparkles,
+  ArrowUpRight
+} from "lucide-react";
+
+interface TechIconProps {
+  name: string;
+  className?: string;
+  size?: number;
+}
+
+export const TechIcon: React.FC<TechIconProps> = ({ name, className = "w-5 h-5", size }) => {
+  const iconMap: Record<string, React.ElementType> = {
+    Code,
+    Coffee,
+    Terminal,
+    FileCode2,
+    Database,
+    Atom,
+    Globe,
+    Palette,
+    Layout,
+    Server,
+    Zap,
+    Cpu,
+    HardDrive,
+    Smartphone,
+    BrainCircuit,
+    Network,
+    Bot,
+    MessageSquareCode,
+    GitBranch,
+    Github,
+    Laptop,
+    GraduationCap,
+    MapPin,
+    Code2,
+    Target,
+    ExternalLink,
+    ChevronRight,
+    Download,
+    Eye,
+    Mail,
+    Linkedin,
+    Sun,
+    Moon,
+    Menu,
+    X,
+    CheckCircle2,
+    AlertCircle,
+    Briefcase,
+    Layers,
+    Award,
+    Sparkles,
+    ArrowUpRight
+  };
+
+  const IconComponent = iconMap[name] || Code;
+  return <IconComponent className={className} size={size} />;
+};

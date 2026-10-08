@@ -1,0 +1,431 @@
+@import "tailwindcss";
+
+:root {
+  /* =========================================================
+     LIQUID LIGHT THEME WITH DYNAMIC LIGHT EFFECTS (DEFAULT)
+     Inspired by luminous water glass, caustic sunlight rays,
+     and pristine crystal reflections
+     ========================================================= */
+  --bg-primary: #EEF5FC;
+  --bg-secondary: rgba(255, 255, 255, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-card-hover: rgba(255, 255, 255, 0.92);
+  --text-main: #0B132B;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border-subtle: rgba(255, 255, 255, 0.85);
+  --border-card: rgba(255, 255, 255, 0.9);
+  --border-highlight: rgba(37, 99, 235, 0.5);
+  --accent-primary: #2563EB;
+  --accent-secondary: #0284C7;
+  --accent-glow: rgba(37, 99, 235, 0.22);
+  --grid-line: rgba(37, 99, 235, 0.04);
+  --nav-bg: rgba(238, 245, 252, 0.78);
+  --specular-highlight: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.9), inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+  --card-shadow-hover: 0 24px 50px -10px rgba(37, 99, 235, 0.2), 0 0 25px 2px rgba(6, 182, 212, 0.2), 0 0 0 1px rgba(255, 255, 255, 1), inset 0 2px 4px 0 rgba(255, 255, 255, 1);
+  --liquid-sheen: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.5) 100%);
+  --caustic-color-1: rgba(59, 130, 246, 0.35);
+  --caustic-color-2: rgba(6, 182, 212, 0.28);
+  --caustic-color-3: rgba(147, 197, 253, 0.3);
+  --water-ripple-ring: rgba(37, 99, 235, 0.18);
+}
+
+html.dark, :root.dark {
+  /* =========================================================
+     LIQUID DARK / DEEP OCEAN THEME WITH BIOLUMINESCENT LIGHT
+     ========================================================= */
+  --bg-primary: #060B18;
+  --bg-secondary: rgba(15, 23, 42, 0.7);
+  --bg-card: rgba(18, 28, 52, 0.58);
+  --bg-card-hover: rgba(26, 40, 74, 0.75);
+  --text-main: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-highlight: rgba(96, 165, 250, 0.55);
+  --accent-primary: #3B82F6;
+  --accent-secondary: #38BDF8;
+  --accent-glow: rgba(59, 130, 246, 0.35);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --nav-bg: rgba(6, 11, 24, 0.75);
+  --specular-highlight: rgba(255, 255, 255, 0.25);
+  --card-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.65), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  --card-shadow-hover: 0 30px 60px -12px rgba(37, 99, 235, 0.4), 0 0 30px 2px rgba(56, 189, 248, 0.25), inset 0 1px 2px 0 rgba(255, 255, 255, 0.3);
+  --liquid-sheen: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.12) 100%);
+  --caustic-color-1: rgba(37, 99, 235, 0.65);
+  --caustic-color-2: rgba(6, 182, 212, 0.4);
+  --caustic-color-3: rgba(99, 102, 241, 0.45);
+  --water-ripple-ring: rgba(56, 189, 248, 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light dark;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background grid pattern */
+.tech-grid-bg {
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* =========================================================
+   LIQUID GLASS CARDS & SURFACES WITH SPECULAR LIGHT EDGE
+   ========================================================= */
+.portfolio-card, .liquid-card {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--border-card);
+  border-radius: 22px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Specular Light Reflection Sheen on Cards */
+.portfolio-card::before, .liquid-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 240%;
+  height: 100%;
+  background: var(--liquid-sheen);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.8s ease;
+  transform: skewX(-20deg);
+}
+
+.portfolio-card:hover, .liquid-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-highlight);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px);
+}
+
+.portfolio-card:hover::before, .liquid-card:hover::before {
+  opacity: 1;
+  transform: skewX(-20deg) translateX(40%);
+}
+
+/* =========================================================
+   LIQUID BUTTONS WITH GLOW & FLUID LIGHT RADIANCE
+   ========================================================= */
+.portfolio-btn {
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-btn-glow {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 50%, #0284C7 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 22px -2px rgba(37, 99, 235, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+  position: relative;
+}
+
+.liquid-btn-glow:hover {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #0EA5E9 100%);
+  box-shadow: 0 8px 30px 0 rgba(37, 99, 235, 0.65), 0 0 20px 2px rgba(6, 182, 212, 0.35), inset 0 1px 2px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Liquid Glass Secondary Button */
+.liquid-btn-glass {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.06), inset 0 1px 1px 0 var(--specular-highlight);
+}
+
+.liquid-btn-glass:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-highlight);
+  box-shadow: 0 8px 25px -4px var(--accent-glow), 0 0 15px 0 rgba(6, 182, 212, 0.15), inset 0 1px 2px 0 var(--specular-highlight);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   LIQUID LIGHT BEAMS, SUN RAYS & CAUSTIC SHIMMER
+   ========================================================= */
+
+/* Shimmering Liquid Light Ray */
+@keyframes liquid-ray-sweep {
+  0% {
+    transform: rotate(-35deg) translateY(-20%) scaleX(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: rotate(-32deg) translateY(10%) scaleX(1.15);
+    opacity: 0.65;
+  }
+  100% {
+    transform: rotate(-35deg) translateY(-20%) scaleX(1);
+    opacity: 0.35;
+  }
+}
+
+.liquid-light-ray-1 {
+  position: absolute;
+  top: -30%;
+  left: -15%;
+  width: 140vw;
+  height: 450px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(56, 189, 248, 0.25) 30%, rgba(37, 99, 235, 0.08) 60%, transparent 100%);
+  filter: blur(55px);
+  pointer-events: none;
+  animation: liquid-ray-sweep 18s ease-in-out infinite;
+}
+
+html.dark .liquid-light-ray-1 {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.22) 0%, rgba(37, 99, 235, 0.15) 35%, transparent 100%);
+}
+
+.liquid-light-ray-2 {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 100vw;
+  height: 380px;
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.2) 0%, rgba(99, 102, 241, 0.1) 45%, transparent 100%);
+  filter: blur(65px);
+  pointer-events: none;
+  animation: liquid-ray-sweep 24s ease-in-out infinite reverse;
+}
+
+/* Liquid Water Caustic Shimmer Animation */
+@keyframes caustic-shimmer {
+  0%, 100% {
+    background-position: 0% 0%, 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%, 50% 100%;
+  }
+}
+
+.liquid-caustic-mesh {
+  background-image:
+    radial-gradient(ellipse at 30% 20%, var(--caustic-color-1) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 65%, var(--caustic-color-2) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 85%, var(--caustic-color-3) 0%, transparent 60%);
+  background-size: 150% 150%;
+  animation: caustic-shimmer 20s ease-in-out infinite;
+}
+
+/* Liquid Caustic Blobs Keyframe Animations */
+@keyframes liquid-blob-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  }
+  33% {
+    transform: translate(35px, -45px) scale(1.08) rotate(45deg);
+    border-radius: 60% 40% 50% 50% / 30% 60% 40% 70%;
+  }
+  66% {
+    transform: translate(-25px, 30px) scale(0.95) rotate(-30deg);
+    border-radius: 50% 50% 40% 60% / 50% 40% 70% 30%;
+  }
+}
+
+@keyframes liquid-blob-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.1) rotate(-60deg);
+    border-radius: 40% 60% 70% 30% / 50% 60% 30% 60%;
+  }
+  66% {
+    transform: translate(30px, -35px) scale(0.92) rotate(40deg);
+    border-radius: 70% 30% 50% 50% / 40% 50% 60% 40%;
+  }
+}
+
+@keyframes liquid-blob-3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%;
+  }
+  50% {
+    transform: translate(-30px, -20px) scale(1.06);
+    border-radius: 60% 40% 60% 40% / 60% 40% 50% 50%;
+  }
+}
+
+.liquid-caustic-blob-1 {
+  animation: liquid-blob-1 22s ease-in-out infinite;
+}
+
+.liquid-caustic-blob-2 {
+  animation: liquid-blob-2 26s ease-in-out infinite;
+}
+
+.liquid-caustic-blob-3 {
+  animation: liquid-blob-3 20s ease-in-out infinite;
+}
+
+/* Floating Tech Badges with Liquid Buoyancy */
+@keyframes float-fluid-1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-fluid-2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-1.5deg);
+  }
+}
+
+.animate-float-1 {
+  animation: float-fluid-1 5s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float-fluid-2 6.5s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float-fluid-1 7s ease-in-out infinite 1s;
+}
+
+/* Floating Micro-Bubble Shimmer */
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(100vh) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.15);
+    opacity: 0;
+  }
+}
+
+.liquid-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(56, 189, 248, 0.4) 40%, rgba(37, 99, 235, 0.1) 80%, transparent 100%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9), 0 0 10px rgba(56, 189, 248, 0.3);
+  pointer-events: none;
+  animation: bubble-rise 16s linear infinite;
+}
+
+/* Liquid Neon Ring Glow */
+.liquid-glow-ring {
+  box-shadow: 0 0 45px 3px var(--accent-glow), 0 0 20px 0 rgba(6, 182, 212, 0.3), inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.6) 0%, rgba(6, 182, 212, 0.6) 100%);
+  border-radius: 6px;
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.9) 0%, rgba(6, 182, 212, 0.9) 100%);
+}
+
+/* Smooth Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .liquid-caustic-blob-1,
+  .liquid-caustic-blob-2,
+  .liquid-caustic-blob-3,
+  .liquid-light-ray-1,
+  .liquid-light-ray-2,
+  .liquid-bubble,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3 {
+    animation: none !important;
+  }
+}
